@@ -610,6 +610,9 @@ bool handler_cov_fsm(void)
         COV_STATE_SEND
     } cov_task_state = COV_STATE_IDLE;
 
+    while( (!COV_Subscriptions[index].flag.valid) && index<(MAX_COV_SUBCRIPTIONS-1))
+        ++index;
+
     switch (cov_task_state) {
         case COV_STATE_IDLE:
             index = 0;
