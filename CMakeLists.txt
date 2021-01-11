@@ -15,9 +15,19 @@ option(
   ON)
 
 option(
+  BACNET_STACK_BUILD_TESTS
+  "build tests"
+  ON)
+
+option(
   BAC_ROUTING
   "enable bac routing"
   ON)
+
+option(
+  BACFILE
+  "enable bacnet file"
+  OFF)
 
 option(
   BACNET_PROPERTY_LISTS
@@ -121,10 +131,10 @@ add_library(${PROJECT_NAME}
     src/bacnet/basic/binding/address.h
     src/bacnet/basic/npdu/h_npdu.c
     src/bacnet/basic/npdu/h_npdu.h
-    src/bacnet/basic/npdu/h_routed_npdu.c
-    src/bacnet/basic/npdu/h_routed_npdu.h
-    src/bacnet/basic/npdu/s_router.c
-    src/bacnet/basic/npdu/s_router.h
+    $<$<BOOL:${BACDL_ROUTING}>:src/bacnet/basic/npdu/h_routed_npdu.c>
+    $<$<BOOL:${BACDL_ROUTING}>:src/bacnet/basic/npdu/h_routed_npdu.h>
+    $<$<BOOL:${BACDL_ROUTING}>:src/bacnet/basic/npdu/s_router.c>
+    $<$<BOOL:${BACDL_ROUTING}>:src/bacnet/basic/npdu/s_router.h>
     src/bacnet/basic/object/access_credential.c
     src/bacnet/basic/object/access_credential.h
     src/bacnet/basic/object/access_door.c
@@ -424,6 +434,7 @@ target_compile_definitions(
   ${PROJECT_NAME}
   PUBLIC
   BACNET_PROTOCOL_REVISION=${BACNET_PROTOCOL_REVISION}
+  $<$<BOOL:${BACFILE}>:BACFILE>
   $<$<BOOL:${BACDL_BIP}>:BACDL_BIP>
   $<$<BOOL:${BACDL_BIP6}>:BACDL_BIP6>
   $<$<BOOL:${BACDL_ARCNET}>:BACDL_ARCNET>
@@ -531,6 +542,8 @@ list(APPEND testdirs
   #test/bacnet/datalink/bvlc		#All tests skipped, needing development
   )
 
+if (BACNET_STACK_BUILD_TESTS)
+
 enable_testing()
 foreach(testdir IN ITEMS ${testdirs})
   get_filename_component(basename ${testdir} NAME)
@@ -545,6 +558,8 @@ foreach(testdir IN ITEMS ${testdirs})
   set_tests_properties(test_${basename}  PROPERTIES FIXTURES_REQUIRED test_fixture)
   set_tests_properties(build_${basename} PROPERTIES FIXTURES_SETUP    test_fixture)
 endforeach()
+
+endif()
 
 #
 # add ports
@@ -809,9 +824,12 @@ message(STATUS "BACNET: CMAKE_CXX_COMPILER_ID:..........\"${CMAKE_CXX_COMPILER_I
 message(STATUS "BACNET: CMAKE_CXX_COMPILER_VERSION:.....\"${CMAKE_CXX_COMPILER_VERSION}\"")
 message(STATUS "BACNET: CMAKE_INSTALL_PREFIX:...........\"${CMAKE_INSTALL_PREFIX}\"")
 message(STATUS "BACNET: BACNET_PROTOCOL_REVISION:.......\"${BACNET_PROTOCOL_REVISION}\"")
+message(STATUS "BACNET: BACNET_STACK_BUILD_APPS:........\"${BACNET_STACK_BUILD_APPS}\"")
+message(STATUS "BACNET: BACNET_STACK_BUILD_TESTS:.......\"${BACNET_STACK_BUILD_TESTS}\"")
 message(STATUS "BACNET: BACDL_BIP6:.....................\"${BACDL_BIP6}\"")
 message(STATUS "BACNET: BACDL_BIP:......................\"${BACDL_BIP}\"")
 message(STATUS "BACNET: BACDL_ARCNET:...................\"${BACDL_ARCNET}\"")
 message(STATUS "BACNET: BACDL_MSTP:.....................\"${BACDL_MSTP}\"")
 message(STATUS "BACNET: BACDL_ETHERNET:.................\"${BACDL_ETHERNET}\"")
+message(STATUS "BACNET: BACFILE:........................\"${BACFILE}\"")
 message(STATUS "BACNET: BACDL_NONE:.....................\"${BACDL_NONE}\"")
