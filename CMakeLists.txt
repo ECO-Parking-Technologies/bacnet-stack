@@ -653,12 +653,13 @@ if(BACNET_STACK_BUILD_APPS)
 
   add_executable(iam apps/iam/main.c)
   target_link_libraries(iam PRIVATE ${PROJECT_NAME})
+  if(BACDL_ROUTING)
+  	add_executable(iamrouter apps/iamrouter/main.c)
+  	target_link_libraries(iamrouter PRIVATE ${PROJECT_NAME})
 
-  add_executable(iamrouter apps/iamrouter/main.c)
-  target_link_libraries(iamrouter PRIVATE ${PROJECT_NAME})
-
-  add_executable(initrouter apps/initrouter/main.c)
-  target_link_libraries(initrouter PRIVATE ${PROJECT_NAME})
+  	add_executable(initrouter apps/initrouter/main.c)
+  	target_link_libraries(initrouter PRIVATE ${PROJECT_NAME})
+  endif()
 
   if(BACDL_MSTP)
     add_executable(mstpcap apps/mstpcap/main.c)
@@ -758,8 +759,10 @@ if(BACNET_STACK_BUILD_APPS)
   add_executable(whois apps/whois/main.c)
   target_link_libraries(whois PRIVATE ${PROJECT_NAME})
 
-  add_executable(whoisrouter apps/whoisrouter/main.c)
-  target_link_libraries(whoisrouter PRIVATE ${PROJECT_NAME})
+  if (BACDL_ROUTING)
+    add_executable(whoisrouter apps/whoisrouter/main.c)
+    target_link_libraries(whoisrouter PRIVATE ${PROJECT_NAME})
+  endif()
 
   add_executable(writefile apps/writefile/main.c)
   target_link_libraries(writefile PRIVATE ${PROJECT_NAME})
