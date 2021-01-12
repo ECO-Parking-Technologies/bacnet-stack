@@ -1,5 +1,7 @@
 #!/bin/sh
 
+cd $(dirname $(readlink -f $0))
+
 rm -rf eco_build
 rm -rf lib
 mkdir eco_build
