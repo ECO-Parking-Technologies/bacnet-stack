@@ -104,6 +104,7 @@ void Analog_Value_Init(void)
         AV_Descr[i].Prior_Value = 0.0f;
         AV_Descr[i].COV_Increment = 1.0f;
         AV_Descr[i].Changed = false;
+        snprintf(AV_Descr[i].Name,  MAX_DEV_NAME_LEN, "ANALOG VALUE %u", i);
 #if defined(INTRINSIC_REPORTING)
         AV_Descr[i].Event_State = EVENT_STATE_NORMAL;
         /* notification class not connected */
@@ -278,13 +279,26 @@ float Analog_Value_Present_Value(uint32_t object_instance)
 bool Analog_Value_Object_Name(
     uint32_t object_instance, BACNET_CHARACTER_STRING *object_name)
 {
-    static char text_string[32] = ""; /* okay for single thread */
     bool status = false;
+    unsigned index = Analog_Value_Instance_To_Index(object_instance);
 
-    if (object_instance < MAX_ANALOG_VALUES) {
-        sprintf(
-            text_string, "ANALOG VALUE %lu", (unsigned long)object_instance);
-        status = characterstring_init_ansi(object_name, text_string);
+    if (index < MAX_ANALOG_VALUES) {
+        status = characterstring_init_ansi(object_name, AV_Descr[index].Name);
+    }
+
+    return status;
+}
+
+bool Analog_Value_Name_Set(
+    uint32_t object_instance,
+    const char *new_name)
+{
+    bool status = false;
+    unsigned index = Analog_Value_Instance_To_Index(object_instance);
+
+    if (index < MAX_ANALOG_VALUES) {
+        strncpy(AV_Descr[index].Name, new_name, MAX_DEV_NAME_LEN);
+        status = true;
     }
 
     return status;

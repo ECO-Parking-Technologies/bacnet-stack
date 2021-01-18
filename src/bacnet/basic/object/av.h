@@ -52,6 +52,7 @@ extern "C" {
         float Prior_Value;
         float COV_Increment;
         bool Changed;
+        char Name[MAX_DEV_NAME_LEN];
 #if defined(INTRINSIC_REPORTING)
         uint32_t Time_Delay;
         uint32_t Notification_Class;
@@ -96,7 +97,7 @@ extern "C" {
     BACNET_STACK_EXPORT
     bool Analog_Value_Name_Set(
         uint32_t object_instance,
-        char *new_name);
+        const char *new_name);
     char *Analog_Value_Name(
         uint32_t object_instance);
 
