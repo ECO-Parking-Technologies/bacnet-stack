@@ -794,15 +794,6 @@ bool Analog_Value_Write_Property(BACNET_WRITE_PROPERTY_DATA *wp_data)
             }
             break;
 
-        case PROP_UNITS:
-            status =
-                WPValidateArgType(&value, BACNET_APPLICATION_TAG_ENUMERATED,
-                    &wp_data->error_class, &wp_data->error_code);
-            if (status) {
-                CurrentAV->Units = value.type.Enumerated;
-            }
-            break;
-
         case PROP_COV_INCREMENT:
             status = WPValidateArgType(&value, BACNET_APPLICATION_TAG_REAL,
                 &wp_data->error_class, &wp_data->error_code);
@@ -927,6 +918,7 @@ bool Analog_Value_Write_Property(BACNET_WRITE_PROPERTY_DATA *wp_data)
         case PROP_STATUS_FLAGS:
         case PROP_EVENT_STATE:
         case PROP_DESCRIPTION:
+        case PROP_UNITS:
 #if defined(INTRINSIC_REPORTING)
         case PROP_ACKED_TRANSITIONS:
         case PROP_EVENT_TIME_STAMPS:
