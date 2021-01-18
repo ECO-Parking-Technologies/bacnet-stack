@@ -340,6 +340,33 @@ void Analog_Value_Change_Of_Value_Clear(uint32_t object_instance)
     }
 }
 
+uint16_t Analog_Value_Units(uint32_t object_instance)
+{
+    unsigned index = 0;
+    uint16_t units = UNITS_NO_UNITS;
+
+    index = Analog_Value_Instance_To_Index(object_instance);
+    if (index < MAX_ANALOG_VALUES) {
+        units = AV_Descr[index].Units;
+    }
+    return units;
+}
+
+
+bool Analog_Value_Units_Set(
+    uint32_t object_instance, uint16_t unit)
+{
+    bool status = false;
+    unsigned index = 0;
+
+    index = Analog_Value_Instance_To_Index(object_instance);
+    if (index < MAX_ANALOG_VALUES) {
+        AV_Descr[index].Units = unit;
+        status = true;
+    }
+    return status;
+}
+
 /**
  * For a given object instance-number, loads the value_list with the COV data.
  *
