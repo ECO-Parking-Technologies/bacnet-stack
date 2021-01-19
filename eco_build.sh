@@ -9,6 +9,7 @@ mkdir eco_build
 options=" \
 -DBACNET_STACK_BUILD_APPS=OFF \
 -DBACNET_STACK_BUILD_TESTS=OFF \
+-DBACNET_CONFIG_H=ON \
 -DBAC_ROUTING=OFF \
 -DBACFILE=OFF \
 -DBACNET_PROPERTY_LISTS=ON \
@@ -19,8 +20,7 @@ options=" \
 -DBACDL_BIP=ON \
 -DBACDL_BIP6=OFF \
 -DCMAKE_BUILD_TYPE=Release \
--DCMAKE_INSTALL_PREFIX='../lib'
--DBACNET_CONFIG_H=ON
+-DCMAKE_INSTALL_PREFIX='/home/eco/projects/falcon/dependencies/gateway/fsroot/usr/local'
 "
 
 cd eco_build

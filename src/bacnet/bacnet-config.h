@@ -5,8 +5,8 @@
 
 
 
-#define BACNET_VENDOR_ID    0xEC0
-#define BACNET_VENDOR_NAME "ECO Parking Technologies"
+#define BACNET_VENDOR_ID            0xEC0 // TODO: need real ID from ASHRAE
+#define BACNET_VENDOR_NAME          "ECO Parking Technologies"
 
 #define MAX_ACCUMULATORS            0
 #define MAX_ACCESS_CREDENTIALS      0
