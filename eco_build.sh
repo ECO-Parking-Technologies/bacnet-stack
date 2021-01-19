@@ -19,7 +19,8 @@ options=" \
 -DBACDL_BIP=ON \
 -DBACDL_BIP6=OFF \
 -DCMAKE_BUILD_TYPE=Release \
--DCMAKE_INSTALL_PREFIX="../lib"
+-DCMAKE_INSTALL_PREFIX='../lib'
+-DBACNET_CONFIG_H=ON
 "
 
 cd eco_build

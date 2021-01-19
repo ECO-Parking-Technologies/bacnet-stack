@@ -68,6 +68,11 @@ option(
   BACDL_NONE
   "compile without datalink"
   OFF)
+  
+option(
+  BACNET_CONFIG_H
+  "include bacnet-config.h to override config options"
+  OFF)
 
 set(BACNET_PROTOCOL_REVISION 19)
 
@@ -444,6 +449,7 @@ target_compile_definitions(
   $<$<BOOL:${BACNET_PROPERTY_LISTS}>:BACNET_PROPERTY_LISTS>
   $<$<BOOL:${BAC_ROUTING}>:BAC_ROUTING>
   $<$<NOT:$<BOOL:${BUILD_SHARED_LIBS}>>:BACNET_STACK_STATIC_DEFINE>
+  $<$<BOOL:${BACNET_CONFIG_H}>:BACNET_CONFIG_H>  
   PRIVATE
   PRINT_ENABLED=1)
 target_link_libraries(${PROJECT_NAME} PUBLIC Threads::Threads)
